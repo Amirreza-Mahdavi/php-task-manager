@@ -20,7 +20,7 @@ CREATE TABLE tasks (
     title VARCHAR(255) NOT NULL,
     description TEXT,
     status VARCHAR(50) NOT NULL CHECK (status IN ('TODO', 'DOING', 'DONE')),
-    priority VARCHAR(50) NOT NULL CHECK (priority IN ('LOW', 'MEDIUM', 'HIGH'),
+    priority VARCHAR(50) NOT NULL CHECK (priority IN ('LOW', 'MEDIUM', 'HIGH')),
     due_date TIMESTAMPTZ NOT NULL,
     created_at TIMESTAMPTZ NOT NULL,
     updated_at TIMESTAMPTZ NOT NULL,
