@@ -16,6 +16,7 @@ CREATE TABLE users (
 
 CREATE TABLE tasks (
     id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    parent_task_id BIGINT,
     user_id BIGINT NOT NULL,
     title VARCHAR(255) NOT NULL,
     description TEXT,
@@ -25,7 +26,8 @@ CREATE TABLE tasks (
     created_at TIMESTAMPTZ NOT NULL,
     updated_at TIMESTAMPTZ NOT NULL,
 
-    FOREIGN KEY (user_id) REFERENCES users(id)
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (parent_task_id) REFERENCES tasks(id)
 );
 
 CREATE TABLE subtasks (
