@@ -30,20 +30,6 @@ CREATE TABLE tasks (
     FOREIGN KEY (parent_task_id) REFERENCES tasks(id)
 );
 
-CREATE TABLE subtasks (
-    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    task_id BIGINT NOT NULL,
-    title VARCHAR(255) NOT NULL,
-    description TEXT,
-   status VARCHAR(50) NOT NULL CHECK (status IN ('TODO', 'DOING', 'DONE')),
-    priority VARCHAR(50) NOT NULL CHECK (priority IN ('LOW', 'MEDIUM', 'HIGH')),
-    due_date TIMESTAMPTZ NOT NULL,
-    created_at TIMESTAMPTZ NOT NULL,
-    updated_at TIMESTAMPTZ NOT NULL,
-
-    FOREIGN KEY (task_id) REFERENCES tasks(id)
-);
-
 CREATE TABLE assignments (
     id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     user_id BIGINT NOT NULL,
