@@ -50,4 +50,8 @@ class Task {
     public function getUpdatedAt(){
         return $this->updatedAt;
     }
+
+    public function setId(int $id){
+        $this->id = $id;
+    }
 }

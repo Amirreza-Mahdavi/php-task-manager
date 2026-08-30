@@ -53,6 +53,13 @@ class UserRepository {
     }
 
     public function save(User $user): void {
+        if ($user->getId() === 0)
+            $this->insert($user);
+
+        $this->update($user);
+    }
+
+    private function insert(User $user): void {
         $sql = "
         INSERT INTO users (
         role_id,
@@ -81,8 +88,25 @@ class UserRepository {
         $user->setId((int) $this->pdo->lastInsertId());
     }
 
+    private function update(User $user): void {
+        $sql = "
+        UPDATE users
+        SET
+        first_name = :first_name,
+        last_name = :last_name,
+        password = :password
+        WHERE id = :id
+        ";
+        $statement = $this->pdo->prepare($sql);
+        $statement->execute([
+            'first_name' => $user->getFirstname(),
+            'last_name' => $user->getLastname(),
+            'password' => $user->getPassword()
+        ]);
+    }
+
     public function delete(int $id): void {
-        
+
         $sql = "DELETE FROM users WHERE id = :id";
         $statement = $this->pdo->prepare($sql);
         $statement->execute(['id' => $id]);
