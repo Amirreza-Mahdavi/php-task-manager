@@ -30,4 +30,8 @@ class User {
     public function getPassword(){
         return $this->password;
     }
+
+    public function setId(int $id){
+        $this->id = $id;
+    }
 }
