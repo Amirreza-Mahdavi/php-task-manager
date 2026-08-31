@@ -38,6 +38,26 @@ class AssignmentRepository {
         return $assignments;
     }
 
+    public function save(Assignment $assignment){
+        $sql = "
+        INSERT INTO assignments (
+        user_id,
+        task_id
+        )
+        VALUES (
+        :user_id,
+        :task_id
+        )
+        ";
+        $statement = $this->pdo->prepare($sql);
+        $statement->execute([
+            'user_id' => $assignment->getUserId(),
+            'task_id' => $assignment->getTaskId()
+        ]);
+
+        $assignment->setId((int) $this->pdo->lastInsertId());
+    }
+
     private function mapToAssignemnt(array $row): Assignment {
         return new Assignment(
             (int) $row['id'],
