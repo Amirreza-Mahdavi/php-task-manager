@@ -11,6 +11,20 @@ class TaskReposotory {
         private PDO $pdo
     ){}
 
+    public function findById(int $id): ?Task {
+        $sql = "SELECT id, user_id, parent_task_id, title, description, status, priority, due_date, created_at, updated_at
+        FROM tasks
+        WHERE id = :id";
+        $statement = $this->pdo->prepare($sql);
+        $statement->execute(['id' => $id]);
+        $row = $statement->fetch(PDO::FETCH_ASSOC);
+
+        if ($row === false)
+            return null;
+
+        return $this->mapToTask($row);
+    }
+
     public function findByUserId(int $id): array {
         $tasks = [];
 
