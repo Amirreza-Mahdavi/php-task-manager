@@ -8,7 +8,7 @@ use TM\Enum\TaskPriority;
 
 class Task {
     public function __construct(
-        private readonly int $id,
+        private readonly ?int $id,
         private readonly ?int $parentTaskId,
         private readonly int $userId,
         private string $title,
