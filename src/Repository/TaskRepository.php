@@ -60,7 +60,7 @@ class TaskReposotory {
     }
 
     public function save(Task $task): void {
-        if ($task->getId() === 0)
+        if ($task->getId() === null)
             $this->insert($task);
 
         $this->update($task);
