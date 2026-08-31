@@ -14,9 +14,11 @@ class TaskReposotory {
     public function findByUserId(int $id): array {
         $tasks = [];
 
-        $sql = "SELECT id, title, description, status, priority, due_date, created_at, updated_at FROM tasks WHERE id = :id";
+        $sql = "SELECT id, user_id, parent_task_id, title, description, status, priority, due_date, created_at, updated_at
+        FROM tasks
+        WHERE user_id = :user_id";
         $statement = $this->pdo->prepare($sql);
-        $statement->execute(['id' => $id]);
+        $statement->execute(['user_id' => $id]);
         $rows = $statement->fetchAll(PDO::FETCH_ASSOC);
 
         foreach ($rows as $row) {
@@ -29,7 +31,8 @@ class TaskReposotory {
     public function findByParentTaskId(int $taskId): array {
         $subTasks = [];
 
-        $sql = "SELECT id, title, description, status, priority, due_date, created_at, updated_at FROM tasks
+        $sql = "SELECT id, user_id, parent_task_id, title, description, status, priority, due_date, created_at, updated_at
+        FROM tasks
         WHERE parent_task_id = :parent_task_id";
         $statement = $this->pdo->prepare($sql);
         $statement->execute(['parent_task_id' => $taskId]);
