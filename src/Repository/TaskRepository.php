@@ -80,7 +80,7 @@ class TaskReposotory {
         updated_at
         )
         VALUES (
-        :parent_task_id
+        :parent_task_id,
         :user_id,
         :title,
         :description,
