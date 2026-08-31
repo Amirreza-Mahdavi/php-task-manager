@@ -117,6 +117,7 @@ class TaskReposotory {
         priority = :priority,
         due_date = :due_date,
         updated_at =:updated_at
+        WHERE id = :id
         ";
         $statement = $this->pdo->prepare($sql);
         $statement->execute([
