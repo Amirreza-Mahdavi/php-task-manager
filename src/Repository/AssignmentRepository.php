@@ -38,7 +38,7 @@ class AssignmentRepository {
         return $assignments;
     }
 
-    public function save(Assignment $assignment){
+    public function save(Assignment $assignment): Assignment {
         $sql = "
         INSERT INTO assignments (
         user_id,
@@ -56,6 +56,8 @@ class AssignmentRepository {
         ]);
 
         $assignment->setId((int) $this->pdo->lastInsertId());
+
+        return $assignment;
     }
 
     private function mapToAssignemnt(array $row): Assignment {
