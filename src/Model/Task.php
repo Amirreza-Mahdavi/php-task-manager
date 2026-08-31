@@ -54,4 +54,8 @@ class Task {
     public function setId(int $id){
         $this->id = $id;
     }
+
+    public function setTaskId(int $id): void {
+        $this->parentTaskId = $id;
+    }
 }
