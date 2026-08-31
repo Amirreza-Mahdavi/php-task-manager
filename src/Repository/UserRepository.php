@@ -10,6 +10,18 @@ class UserRepository {
         private PDO $pdo
     ){}
 
+    public function findById(int $id): ?User {
+        $sql = "SELECT id, role_id, first_name, last_name, email, password FROM users WHERE id = :id";
+        $statement = $this->pdo->prepare($sql);
+        $statement->execute(['id' => $id]);
+        $row = $statement->fetch(PDO::FETCH_ASSOC);
+
+        if ($row === false)
+            return null;
+
+        return $this->mapToUser($row);
+    }
+
     public function findAll(): array {
         $users = [];
 
