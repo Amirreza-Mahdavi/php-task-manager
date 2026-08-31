@@ -2,6 +2,7 @@
 
 namespace TM\Repository;
 
+use DateTimeImmutable;
 use PDO;
 use TM\Model\Task;
 
@@ -128,10 +129,9 @@ class TaskReposotory {
             $row['description'],
             $row['status'],
             $row['priority'],
-            $row['due_date'],
-            $row['created_at'],
-            $row['updated_at']
+            new DateTimeImmutable($row['due_date']),
+            new DateTimeImmutable($row['created_at']),
+            new DateTimeImmutable($row['updated_at'])
         );
     }
-
 }
