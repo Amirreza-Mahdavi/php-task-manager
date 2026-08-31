@@ -20,7 +20,7 @@ class TaskService {
         private AssignmentRepository $assignmentRepository
     ){}
 
-    public function addTask(CreateTaskRequest $request): void {
+    public function addTask(CreateTaskRequest $request): Task {
         $task = new Task();
 
         $task->setUserId($this->authService->getCurrentUser()->getId());
@@ -32,10 +32,10 @@ class TaskService {
         $task->setCreatedAt(new DateTimeImmutable());
         $task->setUpdatedAt(new DateTimeImmutable());
 
-        $this->taskRepository->save($task);
+        return $this->taskRepository->save($task);
     }
 
-    public function addSubtask(int $taskId, CreateTaskRequest $request): void {
+    public function addSubtask(int $taskId, CreateTaskRequest $request): Task {
         $task = $this->taskRepository->findById($taskId);
         if ($task === null)
             throw new RuntimeException("task not found");
@@ -52,10 +52,10 @@ class TaskService {
         $subtask->setCreatedAt(new DateTimeImmutable());
         $subtask->setUpdatedAt(new DateTimeImmutable());
 
-        $this->taskRepository->save($subtask);
+        return $this->taskRepository->save($subtask);
     }
 
-    public function updateTask(int $id, CreateTaskRequest $request): void {
+    public function updateTask(int $id, CreateTaskRequest $request): Task {
         $task = $this->taskRepository->findById($id);
         if ($task === null)
             throw new RuntimeException("task not found");
@@ -67,10 +67,10 @@ class TaskService {
         $task->setDueDate($request->getDueDate());
         $task->setUpdatedAt(new DateTimeImmutable());
 
-        $this->taskRepository->save($task);
+        return $this->taskRepository->save($task);
     }
 
-    public function assignTask(int $userId, int $taskId): void {
+    public function assignTask(int $userId, int $taskId): Assignment {
         $task = $this->taskRepository->findById($taskId);
         if($task === null)
             throw new RuntimeException("Task not found");
@@ -84,6 +84,6 @@ class TaskService {
             $task->getId()
         );
 
-        $this->assignmentRepository->save($assignment);
+        return $this->assignmentRepository->save($assignment);
     }
 }
