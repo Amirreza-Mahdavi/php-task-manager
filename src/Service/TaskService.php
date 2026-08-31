@@ -21,18 +21,16 @@ class TaskService {
     ){}
 
     public function addTask(CreateTaskRequest $request): void {
-        $task = new Task(
-            0,
-            null,
-            $this->authService->getCurrentUser()->getId(),
-            $request->getTitle(),
-            $request->getDescription(),
-            $request->getStatus(),
-            $request->getPriority(),
-            $request->getDueDate(),
-            new DateTimeImmutable(),
-            new DateTimeImmutable()
-        );
+        $task = new Task();
+
+        $task->setUserId($this->authService->getCurrentUser()->getId());
+        $task->setTitle($request->getTitle());
+        $task->setDescription($request->getDescription());
+        $task->setStatus($request->getStatus());
+        $task->setPriority($request->getPriority());
+        $task->setDueDate($request->getDueDate());
+        $task->setCreatedAt(new DateTimeImmutable());
+        $task->setUpdatedAt(new DateTimeImmutable());
 
         $this->taskRepository->save($task);
     }
@@ -42,20 +40,34 @@ class TaskService {
         if ($task === null)
             throw new RuntimeException("task not found");
 
-        $subtask = new Task(
-            0,
-            $taskId,
-            $this->authService->getCurrentUser()->getId(),
-            $request->getTitle(),
-            $request->getDescription(),
-            $request->getStatus(),
-            $request->getPriority(),
-            $request->getDueDate(),
-            new DateTimeImmutable(),
-            new DateTimeImmutable()
-        );
+        $subtask = new Task();
+
+        $task->setUserId($this->authService->getCurrentUser()->getId());
+        $subtask->setTaskId($task->getId());
+        $subtask->setTitle($request->getTitle());
+        $subtask->setDescription($request->getDescription());
+        $subtask->setStatus($request->getStatus());
+        $subtask->setPriority($request->getPriority());
+        $subtask->setDueDate($request->getDueDate());
+        $subtask->setCreatedAt(new DateTimeImmutable());
+        $subtask->setUpdatedAt(new DateTimeImmutable());
 
         $this->taskRepository->save($subtask);
+    }
+
+    public function updateTask(int $id, CreateTaskRequest $request): void {
+        $task = $this->taskRepository->findById($id);
+        if ($task === null)
+            throw new RuntimeException("task not found");
+
+        $task->setTitle($request->getTitle());
+        $task->setDescription($request->getDescription());
+        $task->setStatus($request->getStatus());
+        $task->setPriority($request->getPriority());
+        $task->setDueDate($request->getDueDate());
+        $task->setUpdatedAt(new DateTimeImmutable());
+
+        $this->taskRepository->save($task);
     }
 
     public function assignTask(int $userId, int $taskId): void {
