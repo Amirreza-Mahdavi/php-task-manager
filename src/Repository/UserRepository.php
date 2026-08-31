@@ -49,6 +49,20 @@ class UserRepository {
         return $this->mapToUser($row);
     }
 
+    public function searchByEmail(string $email): array {
+        $users = [];
+        $sql = "SELECT id, role_id, first_name, last_name, email, password FROM users WHERE LIKE :email";
+        $statement = $this->pdo->prepare($sql);
+        $statement->execute(['email' => '%' . $email . '%']);
+        $rows = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        foreach ($rows as $row) {
+            $this->mapToUser($row);
+        }
+
+        return $users;
+    }
+
     public function findByRoleId(int $roleId): array {
         $users = [];
 
