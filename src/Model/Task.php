@@ -7,18 +7,16 @@ use TM\Enum\TaskStatus;
 use TM\Enum\TaskPriority;
 
 class Task {
-    public function __construct(
-        private readonly ?int $id,
-        private readonly ?int $parentTaskId,
-        private readonly int $userId,
-        private string $title,
-        private ?string $description,
-        private TaskStatus $status,
-        private TaskPriority $priority,
-        private DateTimeImmutable $dueDate,
-        private readonly DateTimeImmutable $createdAt,
-        private DateTimeImmutable $updatedAt
-    ){}
+    private readonly ?int $id;
+    private readonly ?int $parentTaskId;
+    private readonly int $userId;
+    private string $title;
+    private ?string $description;
+    private TaskStatus $status;
+    private TaskPriority $priority;
+    private DateTimeImmutable $dueDate;
+    private readonly DateTimeImmutable $createdAt;
+    private DateTimeImmutable $updatedAt;
 
     public function getId(){
         return $this->id;
@@ -54,8 +52,31 @@ class Task {
     public function setId(int $id){
         $this->id = $id;
     }
-
     public function setTaskId(int $id): void {
         $this->parentTaskId = $id;
+    }
+    public function setUserId(int $id){
+        $this->userId = $id;
+    }
+    public function setTitle(string $title){
+        $this->title = $title;
+    }
+    public function setDescription(string $description){
+        $this->description = $description;
+    }
+    public function setStatus(TaskStatus $status){
+        $this->status = $status;
+    }
+    public function setPriority(TaskPriority $priority){
+        $this->priority = $priority;
+    }
+    public function setDueDate(DateTimeImmutable $dueDate){
+        $this->dueDate = $dueDate;
+    }
+    public function setCreatedAt(DateTimeImmutable $createdAt){
+        $this->createdAt = $createdAt;
+    }
+    public function setUpdatedAt(DateTimeImmutable $updatedAt){
+        $this->updatedAt = $updatedAt;
     }
 }
