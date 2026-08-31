@@ -59,14 +59,14 @@ class TaskReposotory {
         return $subTasks;
     }
 
-    public function save(Task $task): void {
+    public function save(Task $task): Task {
         if ($task->getId() === null)
-            $this->insert($task);
-
-        $this->update($task);
+            return $this->insert($task);
+        else 
+            return $this->update($task);
     }
 
-    private function insert(Task $task): void {
+    private function insert(Task $task): Task {
         $sql = "
         INSERT INTO tasks (
         parent_task_id,
@@ -105,9 +105,11 @@ class TaskReposotory {
         ]);
 
         $task->setId((int) $this->pdo->lastInsertId());
+
+        return $task;
     }
 
-    private function update(Task $task): void {
+    private function update(Task $task): Task {
         $sql = "
         UPDATE tasks 
         SET
@@ -128,6 +130,8 @@ class TaskReposotory {
             'due_date' => $task->getDueDate()?->format('Y-m-d H:i:s'),
             'updated_at' => $task->getUpdatedAt()->format('Y-m-d H:i:s')
         ]);
+
+        return $task;
     }
 
     public function delete(int $id): void {
