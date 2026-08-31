@@ -77,7 +77,6 @@ class TaskReposotory {
         priority,
         due_date,
         created_at,
-        created_at,
         updated_at
         )
         VALUES (
@@ -88,7 +87,6 @@ class TaskReposotory {
         :status,
         :priority,
         :due_date,
-        :created_at,
         :created_at,
         :updated_at
         )
