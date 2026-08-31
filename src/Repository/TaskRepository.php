@@ -99,9 +99,9 @@ class TaskReposotory {
             'description' => $task->getDescription(),
             'status' => $task->getStatus(),
             'priority' => $task->getPriority(),
-            'due_date' => $task->getDueDate(),
-            'created_at' => $task->getCreatedAt(),
-            "updated_at" => $task->getUpdatedAt()
+            'due_date' => $task->getDueDate()?->format('Y-m-d H:i:s'),
+            'created_at' => $task->getCreatedAt()->format('Y-m-d H:i:s'),
+            "updated_at" => $task->getUpdatedAt()->format('Y-m-d H:i:s')
         ]);
 
         $task->setId((int) $this->pdo->lastInsertId());
@@ -125,8 +125,8 @@ class TaskReposotory {
             'description' => $task->getDescription(),
             'status' => $task->getStatus(),
             'priority' => $task->getPriority(),
-            'due_date' => $task->getDueDate(),
-            'updated_at' => $task->getUpdatedAt()
+            'due_date' => $task->getDueDate()?->format('Y-m-d H:i:s'),
+            'updated_at' => $task->getUpdatedAt()->format('Y-m-d H:i:s')
         ]);
     }
 
