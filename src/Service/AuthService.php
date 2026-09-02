@@ -13,7 +13,7 @@ class AuthService {
         private UserRepository $userRepository
     ){}
 
-    public function register(RegisterRequest $request): void {
+    public function register(RegisterRequest $request): User {
         if ($this->userRepository->findByEmail($request->getEmail()) !== null)
             throw new RuntimeException("Email is already in use");
 
@@ -26,10 +26,10 @@ class AuthService {
             password_hash($request->getPassword(), PASSWORD_DEFAULT)
         );
 
-        $this->userRepository->save($user);
+        return $this->userRepository->save($user);
     }
 
-    public function login(LoginRequest $request): void {
+    public function login(LoginRequest $request): User {
         $user = $this->userRepository->findByEmail($request->getEmail());
         if ($user === null)
             throw new RuntimeException("Invalid credentials");
@@ -38,6 +38,8 @@ class AuthService {
 
         session_regenerate_id(true);
         $_SESSION['user_id'] = $user->getId();
+
+        return $user;
     }
 
     public function getCurrentUser(): ?User {
