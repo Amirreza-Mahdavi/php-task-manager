@@ -4,7 +4,7 @@ namespace TM\Model;
 
 class Assignment {
     public function __construct(
-        private readonly ?int $id,
+        private ?int $id,
         private readonly int $userId,
         private readonly int $taskId
     ){}

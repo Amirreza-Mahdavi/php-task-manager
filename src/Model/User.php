@@ -4,7 +4,7 @@ namespace TM\Model;
 
 class User {
     public function __construct(
-        private readonly ?int $id,
+        private ?int $id,
         private readonly int $roleId,
         private string $firstname,
         private string $lastname,

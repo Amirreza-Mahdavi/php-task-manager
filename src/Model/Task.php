@@ -7,7 +7,7 @@ use TM\Enum\TaskStatus;
 use TM\Enum\TaskPriority;
 
 class Task {
-    private readonly ?int $id;
+    private ?int $id;
     private readonly ?int $parentTaskId;
     private readonly int $userId;
     private string $title;
