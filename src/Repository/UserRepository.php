@@ -51,7 +51,7 @@ class UserRepository {
 
     public function searchByEmail(string $email): array {
         $users = [];
-        $sql = "SELECT id, role_id, first_name, last_name, email, password FROM users WHERE LIKE :email";
+        $sql = "SELECT id, role_id, first_name, last_name, email, password FROM users WHERE email LIKE :email";
         $statement = $this->pdo->prepare($sql);
         $statement->execute(['email' => '%' . $email . '%']);
         $rows = $statement->fetchAll(PDO::FETCH_ASSOC);
