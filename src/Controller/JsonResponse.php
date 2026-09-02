@@ -11,6 +11,6 @@ class JsonResponse {
     public function send(): void {
         http_response_code($this->statusCode);
         header('Content-Type: application/json');
-        echo json_decode($this->data);
+        echo json_encode($this->data);
     }
 }
