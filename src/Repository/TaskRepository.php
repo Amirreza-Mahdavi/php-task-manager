@@ -36,7 +36,7 @@ class TaskReposotory {
         $rows = $statement->fetchAll(PDO::FETCH_ASSOC);
 
         foreach ($rows as $row) {
-            $this->mapToTask($row);
+            $tasks[] = $this->mapToTask($row);
         }
 
         return $tasks;
@@ -53,7 +53,7 @@ class TaskReposotory {
         $rows = $statement->fetchAll(PDO::FETCH_ASSOC);
 
         foreach ($rows as $row) {
-            $this->mapToTask($row);
+            $subtasks[] = $this->mapToTask($row);
         }
 
         return $subTasks;

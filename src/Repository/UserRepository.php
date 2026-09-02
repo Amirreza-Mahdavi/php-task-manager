@@ -31,7 +31,7 @@ class UserRepository {
         $rows = $statement->fetchAll(PDO::FETCH_ASSOC);
 
         foreach ($rows as $row) {
-            $this->mapToUser($row);
+            $users[] = $this->mapToUser($row);
         }
 
         return $users;
@@ -57,7 +57,7 @@ class UserRepository {
         $rows = $statement->fetchAll(PDO::FETCH_ASSOC);
 
         foreach ($rows as $row) {
-            $this->mapToUser($row);
+            $users[] = $this->mapToUser($row);
         }
 
         return $users;
@@ -72,7 +72,7 @@ class UserRepository {
         $rows = $statement->fetchAll(PDO::FETCH_ASSOC);
 
         foreach ($rows as $row) {
-            $this->mapToUser($row);
+            $users[] = $this->mapToUser($row);
         }
 
         return $users;
