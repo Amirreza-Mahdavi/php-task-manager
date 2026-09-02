@@ -78,14 +78,14 @@ class UserRepository {
         return $users;
     }
 
-    public function save(User $user): void {
+    public function save(User $user): User {
         if ($user->getId() === 0)
-            $this->insert($user);
+            return $this->insert($user);
 
-        $this->update($user);
+        return $this->update($user);
     }
 
-    private function insert(User $user): void {
+    private function insert(User $user): User {
         $sql = "
         INSERT INTO users (
         role_id,
@@ -112,9 +112,10 @@ class UserRepository {
         ]);
 
         $user->setId((int) $this->pdo->lastInsertId());
+        return $user;
     }
 
-    private function update(User $user): void {
+    private function update(User $user): User {
         $sql = "
         UPDATE users
         SET
@@ -129,6 +130,8 @@ class UserRepository {
             'last_name' => $user->getLastname(),
             'password' => $user->getPassword()
         ]);
+
+        return $user;
     }
 
     public function delete(int $id): void {
