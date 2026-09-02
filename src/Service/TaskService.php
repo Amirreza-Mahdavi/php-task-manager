@@ -42,7 +42,7 @@ class TaskService {
 
         $subtask = new Task();
 
-        $task->setUserId($this->authService->getCurrentUser()->getId());
+        $subtask->setUserId($this->authService->getCurrentUser()->getId());
         $subtask->setTaskId($task->getId());
         $subtask->setTitle($request->getTitle());
         $subtask->setDescription($request->getDescription());
