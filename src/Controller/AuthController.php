@@ -5,8 +5,10 @@ namespace TM\Controller;
 use TM\Service\AuthService;
 use TM\Trait\JsonRequestTrait;
 use TM\Controller\JsonResponse;
+use TM\DTO\AuthResponse;
 use TM\DTO\LoginRequest;
 use TM\DTO\RegisterRequest;
+use TM\Model\User;
 
 class AuthController {
     use JsonRequestTrait;
@@ -23,9 +25,10 @@ class AuthController {
             $data['email'],
             $data['password']
         );
-        $response = $this->authService->register($request);
+        $user = $this->authService->register($request);
+        $response = $this->mapToResponse($user);
         
-        return new JsonResponse($response, 201);
+        return new JsonResponse($response->toArray(), 201);
     }
 
     public function login(): JsonResponse {
@@ -34,8 +37,20 @@ class AuthController {
             $data['email'],
             $data['password']
         );
-        $response = $this->authService->login($request);
+        $user = $this->authService->login($request);
+        $response = $this->mapToResponse($user);
 
-        return new JsonResponse($response, 200);
+        return new JsonResponse($response->toArray(), 200);
     }
+
+    private function mapToResponse(User $user): AuthResponse {
+        return new AuthResponse(
+            $user->getId(),
+            $user->getRoleId(),
+            $user->getFirstname(),
+            $user->getLastname(),
+            $user->getEmail()
+        );
+    }
+
 }
