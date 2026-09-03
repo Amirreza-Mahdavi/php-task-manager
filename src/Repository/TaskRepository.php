@@ -8,7 +8,7 @@ use TM\Enum\TaskPriority;
 use TM\Enum\TaskStatus;
 use TM\Model\Task;
 
-class TaskReposotory {
+class TaskRepository {
     public function __construct(
         private PDO $pdo
     ){}

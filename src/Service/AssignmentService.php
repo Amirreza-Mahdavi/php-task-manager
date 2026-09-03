@@ -4,14 +4,14 @@ namespace TM\Service;
 
 use RuntimeException;
 use TM\Repository\AssignmentRepository;
-use TM\Repository\TaskReposotory;
+use TM\Repository\TaskRepository;
 use TM\Repository\UserRepository;
 use TM\Model\Assignment;
 
 class AssignmentService {
     public function __construct(
         private AssignmentRepository $assignmentRepository,
-        private TaskReposotory $taskRepository,
+        private TaskRepository $taskRepository,
         private UserRepository $userRepository
     ){}
 

@@ -4,7 +4,7 @@ namespace TM\Service;
 
 use DateTimeImmutable;
 use RuntimeException;
-use TM\Repository\TaskReposotory;
+use TM\Repository\TaskRepository;
 use TM\DTO\CreateTaskRequest;
 use TM\Model\Assignment;
 use TM\Service\AuthService;
@@ -15,7 +15,7 @@ use TM\Model\User;
 
 class TaskService {
     public function __construct(
-        private TaskReposotory $taskRepository,
+        private TaskRepository $taskRepository,
         private AuthService $authService,
         private UserRepository $userRepository,
         private AssignmentRepository $assignmentRepository
