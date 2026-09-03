@@ -11,6 +11,7 @@ use TM\Service\AuthService;
 use TM\Model\Task;
 use TM\Repository\AssignmentRepository;
 use TM\Repository\UserRepository;
+use TM\Model\User;
 
 class TaskService {
     public function __construct(
@@ -23,7 +24,7 @@ class TaskService {
     public function addTask(CreateTaskRequest $request): Task {
         $task = new Task();
 
-        $task->setUserId($this->authService->getCurrentUser()->getId());
+        $task->setUserId($this->checkAuthentication());
         $task->setTitle($request->getTitle());
         $task->setDescription($request->getDescription());
         $task->setStatus($request->getStatus());
@@ -42,7 +43,7 @@ class TaskService {
 
         $subtask = new Task();
 
-        $subtask->setUserId($this->authService->getCurrentUser()->getId());
+        $subtask->setUserId($this->checkAuthentication());
         $subtask->setTaskId($task->getId());
         $subtask->setTitle($request->getTitle());
         $subtask->setDescription($request->getDescription());
@@ -53,6 +54,13 @@ class TaskService {
         $subtask->setUpdatedAt(new DateTimeImmutable());
 
         return $this->taskRepository->save($subtask);
+    }
+
+    private function checkAuthentication(): int {
+        $user = $this->authService->getCurrentUser();
+        if($user === null)
+            throw new RuntimeException("User not found");
+        return $user->getId();
     }
 
     public function updateTask(int $id, CreateTaskRequest $request): Task {
