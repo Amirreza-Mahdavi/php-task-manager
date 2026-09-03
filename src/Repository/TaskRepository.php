@@ -45,7 +45,7 @@ class TaskRepository {
     }
 
     public function findByParentTaskId(int $taskId): array {
-        $subTasks = [];
+        $subtasks = [];
 
         $sql = "SELECT id, user_id, parent_task_id, title, description, status, priority, due_date, created_at, updated_at
         FROM tasks
@@ -58,7 +58,7 @@ class TaskRepository {
             $subtasks[] = $this->mapToTask($row);
         }
 
-        return $subTasks;
+        return $subtasks;
     }
 
     public function save(Task $task): Task {
