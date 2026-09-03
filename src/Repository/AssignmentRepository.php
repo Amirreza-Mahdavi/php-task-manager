@@ -62,7 +62,7 @@ class AssignmentRepository {
 
     private function mapToAssignemnt(array $row): Assignment {
         return new Assignment(
-            (int) $row['id'],
+            $row['id'] !== null ? (int) $row['id'] : null,
             (int) $row['user_id'],
             (int) $row['task_id']
         );

@@ -4,6 +4,8 @@ namespace TM\Repository;
 
 use DateTimeImmutable;
 use PDO;
+use TM\Enum\TaskPriority;
+use TM\Enum\TaskStatus;
 use TM\Model\Task;
 
 class TaskReposotory {
@@ -97,8 +99,8 @@ class TaskReposotory {
             'user_id' => $task->getUserId(),
             'title' => $task->getTitle(),
             'description' => $task->getDescription(),
-            'status' => $task->getStatus(),
-            'priority' => $task->getPriority(),
+            'status' => $task->getStatus()->value,
+            'priority' => $task->getPriority()->value,
             'due_date' => $task->getDueDate()?->format('Y-m-d H:i:s'),
             'created_at' => $task->getCreatedAt()->format('Y-m-d H:i:s'),
             "updated_at" => $task->getUpdatedAt()->format('Y-m-d H:i:s')
@@ -125,8 +127,8 @@ class TaskReposotory {
         $statement->execute([
             'title' => $task->getTitle(),
             'description' => $task->getDescription(),
-            'status' => $task->getStatus(),
-            'priority' => $task->getPriority(),
+            'status' => $task->getStatus()->value,
+            'priority' => $task->getPriority()->value,
             'due_date' => $task->getDueDate()?->format('Y-m-d H:i:s'),
             'updated_at' => $task->getUpdatedAt()->format('Y-m-d H:i:s')
         ]);
@@ -142,13 +144,13 @@ class TaskReposotory {
 
     private function mapToTask(array $row): Task {
         return new Task(
-            (int) $row['id'],
-            (int) $row['parent_task_id'],
+            $row['id'] !== null ? (int) $row['id'] : null,
+            $row['parent_task_id'] !== null ? (int) $row['parent_task_id'] : null,
             (int) $row['user_id'],
             $row['title'],
             $row['description'],
-            $row['status'],
-            $row['priority'],
+            TaskStatus::from($row['status']),
+            TaskPriority::from($row['priority']),
             new DateTimeImmutable($row['due_date']),
             new DateTimeImmutable($row['created_at']),
             new DateTimeImmutable($row['updated_at'])

@@ -126,6 +126,7 @@ class UserRepository {
         ";
         $statement = $this->pdo->prepare($sql);
         $statement->execute([
+            'id' => $user->getId(),
             'first_name' => $user->getFirstname(),
             'last_name' => $user->getLastname(),
             'password' => $user->getPassword()
@@ -143,7 +144,7 @@ class UserRepository {
 
     private function mapToUser(array $row): User {
         return new User(
-            (int) $row['id'],
+            $row['id'] !== null ? (int) $row['id'] : null,
             (int) $row['role_id'],
             $row['first_name'],
             $row['last_name'],
