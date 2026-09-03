@@ -59,7 +59,7 @@ class TaskService {
     private function checkAuthentication(): int {
         $user = $this->authService->getCurrentUser();
         if($user === null)
-            throw new RuntimeException("User not found");
+            throw new RuntimeException("Authentication required");
         return $user->getId();
     }
 
