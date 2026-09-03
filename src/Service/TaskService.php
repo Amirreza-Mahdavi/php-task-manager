@@ -68,6 +68,9 @@ class TaskService {
         if ($task === null)
             throw new RuntimeException("task not found");
 
+        if ($task->getUserId() !== $this->authService->getCurrentUser()->getId())
+            throw new RuntimeException("User not allowed to update task");
+
         $task->setTitle($request->getTitle());
         $task->setDescription($request->getDescription());
         $task->setStatus($request->getStatus());
