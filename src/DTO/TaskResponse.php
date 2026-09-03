@@ -21,11 +21,11 @@ class TaskResponse {
         return [
             'title' => $this->title,
             'description' => $this->description,
-            'status' => $this->status,
-            'priority' => $this->priority,
-            'dueDate' => $this-> dueDate,
-            'createdAt' => $this->createdAt,
-            'updatedat' => $this->updatedAt
+            'status' => $this->status->value,
+            'priority' => $this->priority->value,
+            'dueDate' => $this->dueDate->format('Y-m-d H:i:s'),
+            'createdAt' => $this->createdAt->format('Y-m-d H:i:s'),
+            'updatedAt' => $this->updatedAt->format('Y-m-d H:i:s')
         ];
     }
 }
