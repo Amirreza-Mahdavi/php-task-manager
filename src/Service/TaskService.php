@@ -41,6 +41,8 @@ class TaskService {
         if ($task === null)
             throw new RuntimeException("task not found");
 
+        $this->checkAuthorization($task->getUserId());
+
         $subtask = new Task();
 
         $subtask->setUserId($this->checkAuthentication());
@@ -63,13 +65,17 @@ class TaskService {
         return $user->getId();
     }
 
+    private function checkAuthorization(int $userId): void {
+        if ($userId !== $this->authService->getCurrentUser()->getId())
+            throw new RuntimeException("User not allowed to update task");
+    }
+
     public function updateTask(int $id, CreateTaskRequest $request): Task {
         $task = $this->taskRepository->findById($id);
         if ($task === null)
             throw new RuntimeException("task not found");
 
-        if ($task->getUserId() !== $this->authService->getCurrentUser()->getId())
-            throw new RuntimeException("User not allowed to update task");
+        $this->checkAuthorization($task->getUserId());
 
         $task->setTitle($request->getTitle());
         $task->setDescription($request->getDescription());
