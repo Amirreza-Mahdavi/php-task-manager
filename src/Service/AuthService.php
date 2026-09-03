@@ -42,6 +42,11 @@ class AuthService {
         return $user;
     }
 
+    public function logout(): void {
+        $_SESSION = [];
+        session_destroy();
+    }
+
     public function getCurrentUser(): ?User {
         if (!isset($_SESSION['user_id'])) {
             return null;
