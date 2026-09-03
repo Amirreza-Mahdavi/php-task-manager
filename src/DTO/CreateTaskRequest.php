@@ -15,19 +15,19 @@ class CreateTaskRequest {
         private DateTimeImmutable $dueDate, 
     ){}
 
-    public function getTitle(){
+    public function getTitle(): string {
         return $this->title;
     }
-    public function getDescription(){
+    public function getDescription(): ?string {
         return $this->description;
     }
-    public function getStatus(){
+    public function getStatus(): TaskStatus {
         return $this->status;
     }
-    public function getPriority(){
+    public function getPriority(): TaskPriority {
         return $this->priority;
     }
-    public function getDueDate(){
+    public function getDueDate(): DateTimeImmutable {
         return $this->dueDate;
     }
 }
