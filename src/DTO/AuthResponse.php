@@ -10,4 +10,14 @@ class AuthResponse {
         private string $lastname,
         private string $email
     ){}
+
+    public function toArray(): array {
+        return [
+            'id' => $this->id,
+            'roleId' => $this->roleId,
+            'firstname' => $this->firstname,
+            'lastname' => $this->lastname,
+            'email' => $this->email
+        ];
+    }
 }

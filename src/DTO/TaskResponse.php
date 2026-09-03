@@ -16,4 +16,16 @@ class TaskResponse {
         private readonly DateTimeImmutable $createdAt,
         private DateTimeImmutable $updatedAt
     ){}
+
+    public function toArray(): array {
+        return [
+            'title' => $this->title,
+            'description' => $this->description,
+            'status' => $this->status,
+            'priority' => $this->priority,
+            'dueDate' => $this-> dueDate,
+            'createdAt' => $this->createdAt,
+            'updatedat' => $this->updatedAt
+        ];
+    }
 }
