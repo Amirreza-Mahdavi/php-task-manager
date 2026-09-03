@@ -22,7 +22,7 @@ class AssignmentRepository {
         if ($row === false)
             return null;
 
-        return $this->mapToAssignemnt($row);
+        return $this->mapToAssignment($row);
 
     }
 
@@ -34,7 +34,7 @@ class AssignmentRepository {
         $rows = $statement->fetchAll(PDO::FETCH_ASSOC);
 
         foreach ($rows as $row) {
-            $assignments[] = $this->mapToAssignemnt($row);
+            $assignments[] = $this->mapToAssignment($row);
         }
 
         return $assignments;
@@ -48,7 +48,7 @@ class AssignmentRepository {
         $rows = $statement->fetchAll(PDO::FETCH_ASSOC);
 
         foreach ($rows as $row) {
-            $assignments[] = $this->mapToAssignemnt($row);
+            $assignments[] = $this->mapToAssignment($row);
         }
 
         return $assignments;
