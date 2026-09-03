@@ -9,16 +9,22 @@ use TM\DTO\AuthResponse;
 use TM\DTO\LoginRequest;
 use TM\DTO\RegisterRequest;
 use TM\Model\User;
+use TM\Validation\LoginValidation;
+use TM\Validation\RegisterValidation;
 
 class AuthController {
     use JsonRequestTrait;
 
     public function __construct(
-        private AuthService $authService
+        private AuthService $authService,
+        private RegisterValidation $registerValidation,
+        private LoginValidation $loginValidation
     ){}
 
     public function register(): JsonResponse {
         $data = $this->getJsonBody();
+        $this->registerValidation->validate($data);
+
         $request = new RegisterRequest(
             $data['firstname'],
             $data['lastname'],
@@ -33,6 +39,8 @@ class AuthController {
 
     public function login(): JsonResponse {
         $data = $this->getJsonBody();
+        $this->loginValidation->validate($data);
+        
         $request = new LoginRequest(
             $data['email'],
             $data['password']

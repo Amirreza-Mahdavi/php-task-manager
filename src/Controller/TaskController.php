@@ -11,16 +11,20 @@ use TM\Model\Task;
 use TM\Controller\JsonResponse;
 use TM\Enum\TaskPriority;
 use TM\Enum\TaskStatus;
+use TM\Validation\TaskValidation;
 
 class TaskController {
     use JsonRequestTrait;
 
     public function __construct(
-        private TaskService $taskService
+        private TaskService $taskService,
+        private TaskValidation $taskValidation
     ){}
 
     public function addTask(): JsonResponse {
         $data = $this->getJsonBody();
+        $this->taskValidation->validate($data);
+
         $task = $this->taskService->addTask($this->mapToRequest($data));
         $response = $this->mapToResponse($task);
 
@@ -29,6 +33,8 @@ class TaskController {
 
     public function addSubtask(int $taskId): JsonResponse {
         $data = $this->getJsonBody();
+        $this->taskValidation->validate($data);
+
         $subtask = $this->taskService->addSubtask($taskId, $this->mapToRequest($data));
         $response = $this->mapToResponse($subtask);
 
@@ -37,6 +43,8 @@ class TaskController {
 
     public function updateTask(int $id): JsonResponse {
         $data = $this->getJsonBody();
+        $this->taskValidation->validate($data);
+        
         $task = $this->taskService->updateTask($id, $this->mapToRequest($data));
         $response = $this->mapToResponse($task);
 
