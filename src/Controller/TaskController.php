@@ -21,7 +21,7 @@ class TaskController {
         $task = $this->taskService->addTask($this->mapToRequest($data));
         $response = $this->mapToResponse($task);
 
-        return new JsonResponse($response, 201);
+        return new JsonResponse($response->toArray(), 201);
     }
 
     public function addSubtask(int $taskId): JsonResponse {
@@ -29,7 +29,7 @@ class TaskController {
         $subtask = $this->taskService->addSubtask($taskId, $this->mapToRequest($data));
         $response = $this->mapToResponse($subtask);
 
-        return new JsonResponse($response, 201);
+        return new JsonResponse($response->toArray(), 201);
     }
 
     public function updateTask(int $id): JsonResponse {
@@ -37,7 +37,7 @@ class TaskController {
         $task = $this->taskService->updateTask($id, $this->mapToRequest($data));
         $response = $this->mapToResponse($task);
 
-        return new JsonResponse($response);
+        return new JsonResponse($response->toArray());
     }
 
     private function mapToRequest(array $data): CreateTaskRequest {
