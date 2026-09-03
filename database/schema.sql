@@ -40,3 +40,6 @@ CREATE TABLE assignments (
 
     UNIQUE (user_id, task_id)
 );
+
+INSERT INTO roles (name)
+VALUES ('Admin'), ('Member');
