@@ -10,6 +10,22 @@ class AssignmentRepository {
         private PDO $pdo
     ){}
 
+    public function findByUserIdAndTaskId(int $userId, int $taskId): ?Assignment {
+        $sql = "SELECT id, user_id, task_id FROM assignments WHERE user_id = :user_id AND task_id = :task_id";
+        $statement = $this->pdo->prepare($sql);
+        $statement->execute([
+            'user_id' => $userId,
+            'task_id' => $taskId
+        ]);
+        $row = $statement->fetch(PDO::FETCH_ASSOC);
+
+        if ($row === false)
+            return null;
+
+        return $this->mapToAssignemnt($row);
+
+    }
+
     public function findByUserId(int $id): array {
         $assignments = [];
         $sql = "SELECT id, user_id, task_id FROM assignments WHERE user_id = :user_id";

@@ -22,6 +22,8 @@ class AssignmentService {
         $user = $this->userRepository->findById($userId);
         if($user === null)
             throw new RuntimeException("User not found");
+        if($this->assignmentRepository->findByUserIdAndTaskId($userId, $taskId) !== null)
+            throw new RuntimeException("Task is already assigned to this user");
 
         $assignment = new Assignment(
             null,
