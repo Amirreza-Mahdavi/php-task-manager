@@ -2,12 +2,15 @@
 
 namespace TM\Controller;
 
+use DateTimeImmutable;
 use TM\Trait\JsonRequestTrait;
 use TM\DTO\CreateTaskRequest;
 use TM\Service\TaskService;
 use TM\DTO\TaskResponse;
 use TM\Model\Task;
 use TM\Controller\JsonResponse;
+use TM\Enum\TaskPriority;
+use TM\Enum\TaskStatus;
 
 class TaskController {
     use JsonRequestTrait;
@@ -43,10 +46,10 @@ class TaskController {
     private function mapToRequest(array $data): CreateTaskRequest {
         return new CreateTaskRequest(
             $data['title'],
-            $data['description'],
-            $data['status'],
-            $data['priority'],
-            $data['dueDate']
+            $data['description'] ?? null,
+            TaskStatus::from($data['status']),
+            TaskPriority::from($data['priority']),
+            new DateTimeImmutable($data['dueDate'])
         );
     }
 
