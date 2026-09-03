@@ -34,13 +34,13 @@ class AssignmentRepository {
         $rows = $statement->fetchAll(PDO::FETCH_ASSOC);
 
         foreach ($rows as $row) {
-            $assignment[] = $this->mapToAssignemnt($row);
+            $assignments[] = $this->mapToAssignemnt($row);
         }
 
         return $assignments;
     }
 
-    public function finByTaskId(int $id): array {
+    public function findByTaskId(int $id): array {
         $assignments = [];
         $sql = "SELECT id, user_id, task_id FROM assignments WHERE task_id = :task_id";
         $statement = $this->pdo->prepare($sql);
@@ -48,7 +48,7 @@ class AssignmentRepository {
         $rows = $statement->fetchAll(PDO::FETCH_ASSOC);
 
         foreach ($rows as $row) {
-            $assignment[] = $this->mapToAssignemnt($row);
+            $assignments[] = $this->mapToAssignemnt($row);
         }
 
         return $assignments;
@@ -76,7 +76,7 @@ class AssignmentRepository {
         return $assignment;
     }
 
-    private function mapToAssignemnt(array $row): Assignment {
+    private function mapToAssignment(array $row): Assignment {
         return new Assignment(
             $row['id'] !== null ? (int) $row['id'] : null,
             (int) $row['user_id'],
