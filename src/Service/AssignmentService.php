@@ -39,7 +39,11 @@ class AssignmentService {
     }
     
     private function isAdmin(): void {
-        if ($this->authService->getCurrentUser()->getId() !== 1)
+        $user = $this->authService->getCurrentUser();
+
+        if ($user === null) 
+            throw new RuntimeException("Authentication required");
+        if ($user->getId() !== 1)
             throw new RuntimeException("Not Allowed, Admins only");
     }
 }
