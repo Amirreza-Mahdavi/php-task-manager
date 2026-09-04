@@ -9,7 +9,7 @@ use TM\Enum\TaskPriority;
 class TaskResponse {
     public function __construct(
         private string $title,
-        private string $description,
+        private ?string $description,
         private TaskStatus $status,
         private TaskPriority $priority,
         private DateTimeImmutable $dueDate,
