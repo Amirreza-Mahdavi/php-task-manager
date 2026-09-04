@@ -10,7 +10,7 @@ class TaskValidation {
     public function validate(array $data){
         if(empty($data['title']) || strlen($data['title']) > 150)
             throw new ValidationException("Task title is required and cannot exceed 150 characters");
-        if(strlen($data['description']) > 2000)
+        if(isset($data['description']) && strlen($data['description']) > 2000)
             throw new ValidationException("Task description cannot exceed 2000 characters");
         if(
             !isset($data['status']) || 
@@ -32,10 +32,15 @@ class TaskValidation {
         ){
             throw new ValidationException("Invalid Task priority");
         }
-        if(
-            !isset($data['dueDate']) ||
-            !$data['dueDate'] instanceof \DateTimeImmutable
-        )
-        throw new ValidationException("Invalid due date");
+        if(!isset($data['dueDate']) || !is_string($data['dueDate']))
+            throw new ValidationException("Invalid due date");
+
+        try {
+            new \DateTimeImmutable($data['dueDate']);
+        } 
+        catch (\Exception $e) {
+            throw new ValidationException("Invalid due date");
+        }
+        
     }
 }
