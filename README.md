@@ -81,7 +81,7 @@ psql --version
 ## 1. Clone the Repository
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/Amirreza-Mahdavi/php-task-manager.git
 cd php-task-manager
 ```
 
@@ -131,7 +131,6 @@ DB_PASSWORD=postgres_password
 
 Update these values to match your PostgreSQL configuration.
 
-> Do not commit `.env` to version control.
 
 ---
 
