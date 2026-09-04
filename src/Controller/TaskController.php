@@ -44,11 +44,17 @@ class TaskController {
     public function updateTask(int $id): JsonResponse {
         $data = $this->getJsonBody();
         $this->taskValidation->validate($data);
-        
+
         $task = $this->taskService->updateTask($id, $this->mapToRequest($data));
         $response = $this->mapToResponse($task);
 
         return new JsonResponse($response->toArray());
+    }
+
+    public function deleteTask(int $id): JsonResponse {
+        $this->taskService->deleteTask($id);
+
+        return new JsonResponse("successfuly deleted", 200);
     }
 
     private function mapToRequest(array $data): CreateTaskRequest {

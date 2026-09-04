@@ -86,4 +86,17 @@ class TaskService {
 
         return $this->taskRepository->save($task);
     }
+
+    public function deleteTask(int $id): void {
+        $task = $this->taskRepository->findById($id);
+        if ($task === null)
+            throw new RuntimeException("task not found");
+
+        $this->checkAuthorization($task->getUserId());
+
+        if($this->assignmentRepository->findByTaskId($id) !== null)
+            throw new RuntimeException("Task cannot be deleted because it has assignments");
+
+        $this->taskRepository->delete($id);
+    }
 }
