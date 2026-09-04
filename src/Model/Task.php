@@ -77,7 +77,7 @@ class Task {
     public function setId(int $id){
         $this->id = $id;
     }
-    public function setTaskId(int $id): void {
+    public function setTaskId(?int $id): void {
         $this->parentTaskId = $id;
     }
     public function setUserId(int $id){
@@ -86,7 +86,7 @@ class Task {
     public function setTitle(string $title){
         $this->title = $title;
     }
-    public function setDescription(string $description){
+    public function setDescription(?string $description){
         $this->description = $description;
     }
     public function setStatus(TaskStatus $status){
