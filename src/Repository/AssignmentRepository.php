@@ -64,6 +64,7 @@ class AssignmentRepository {
         :user_id,
         :task_id
         )
+        RETURNING id
         ";
         $statement = $this->pdo->prepare($sql);
         $statement->execute([
@@ -71,7 +72,7 @@ class AssignmentRepository {
             'task_id' => $assignment->getTaskId()
         ]);
 
-        $assignment->setId((int) $this->pdo->lastInsertId());
+        $assignment->setId((int) $statement->fetchColumn());
 
         return $assignment;
     }

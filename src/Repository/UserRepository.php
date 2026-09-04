@@ -101,6 +101,7 @@ class UserRepository {
         :email,
         :password
         )
+        RETURNING id
         ";
         $statement = $this->pdo->prepare($sql);
         $statement->execute([
@@ -111,7 +112,7 @@ class UserRepository {
             'password' => $user->getPassword()
         ]);
 
-        $user->setId((int) $this->pdo->lastInsertId());
+        $user->setId((int) $statement->fetchColumn());
         return $user;
     }
 

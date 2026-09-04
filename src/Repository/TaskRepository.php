@@ -92,6 +92,7 @@ class TaskRepository {
         :created_at,
         :updated_at
         )
+        RETURNING id
         ";
         $statement = $this->pdo->prepare($sql);
         $statement->execute([
@@ -106,7 +107,7 @@ class TaskRepository {
             "updated_at" => $task->getUpdatedAt()->format('Y-m-d H:i:s')
         ]);
 
-        $task->setId((int) $this->pdo->lastInsertId());
+        $task->setId((int) $statement->fetchColumn());
 
         return $task;
     }
@@ -125,6 +126,7 @@ class TaskRepository {
         ";
         $statement = $this->pdo->prepare($sql);
         $statement->execute([
+            'id' => $task->getId(),
             'title' => $task->getTitle(),
             'description' => $task->getDescription(),
             'status' => $task->getStatus()->value,
