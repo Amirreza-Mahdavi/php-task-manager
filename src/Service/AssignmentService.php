@@ -7,8 +7,11 @@ use TM\Repository\AssignmentRepository;
 use TM\Repository\TaskRepository;
 use TM\Repository\UserRepository;
 use TM\Model\Assignment;
+use TM\Trait\Authorization;
 
 class AssignmentService {
+    use Authorization;
+
     public function __construct(
         private AssignmentRepository $assignmentRepository,
         private TaskRepository $taskRepository,
@@ -16,6 +19,8 @@ class AssignmentService {
     ){}
 
     public function assignTask(int $userId, int $taskId): Assignment {
+        $this->isAdmin();
+
         $task = $this->taskRepository->findById($taskId);
         if($task === null)
             throw new RuntimeException("Task not found");
