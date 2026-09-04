@@ -7,15 +7,14 @@ use TM\Repository\AssignmentRepository;
 use TM\Repository\TaskRepository;
 use TM\Repository\UserRepository;
 use TM\Model\Assignment;
-use TM\Trait\Authorization;
 
 class AssignmentService {
-    use Authorization;
 
     public function __construct(
         private AssignmentRepository $assignmentRepository,
         private TaskRepository $taskRepository,
-        private UserRepository $userRepository
+        private UserRepository $userRepository,
+        private AuthService $authService
     ){}
 
     public function assignTask(int $userId, int $taskId): Assignment {
@@ -37,5 +36,10 @@ class AssignmentService {
         );
 
         return $this->assignmentRepository->save($assignment);
+    }
+    
+    private function isAdmin(): void {
+        if ($this->authService->getCurrentUser()->getId() !== 1)
+            throw new RuntimeException("Not Allowed, Admins only");
     }
 }
