@@ -8,15 +8,40 @@ use TM\Enum\TaskPriority;
 
 class Task {
     private ?int $id;
-    private readonly ?int $parentTaskId;
-    private readonly int $userId;
+    private ?int $parentTaskId;
+    private int $userId;
     private string $title;
     private ?string $description;
     private TaskStatus $status;
     private TaskPriority $priority;
     private DateTimeImmutable $dueDate;
-    private readonly DateTimeImmutable $createdAt;
+    private DateTimeImmutable $createdAt;
     private DateTimeImmutable $updatedAt;
+
+    public function __construct(
+        ?int $id = null,
+        ?int $parentTaskId = null,
+        ?int $userId = null,
+        ?string $title = null,
+        ?string $description = null,
+        ?TaskStatus $status = null,
+        ?TaskPriority $priority = null,
+        ?DateTimeImmutable $dueDate = null,
+        ?DateTimeImmutable $createdAt = null,
+        ?DateTimeImmutable $updatedAt = null
+    ) {
+        $this->id = $id;
+        $this->parentTaskId = $parentTaskId;
+        $this->description = $description;
+
+        if ($userId !== null) $this->userId = $userId;
+        if ($title !== null) $this->title = $title;
+        if ($status !== null) $this->status = $status;
+        if ($priority !== null) $this->priority = $priority;
+        if ($dueDate !== null) $this->dueDate = $dueDate;
+        if ($createdAt !== null) $this->createdAt = $createdAt;
+        if ($updatedAt !== null) $this->updatedAt = $updatedAt;
+    }
 
     public function getId(){
         return $this->id;
