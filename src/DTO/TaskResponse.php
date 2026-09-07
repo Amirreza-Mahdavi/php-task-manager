@@ -8,6 +8,7 @@ use TM\Enum\TaskPriority;
 
 class TaskResponse {
     public function __construct(
+        private int $id,
         private string $title,
         private ?string $description,
         private TaskStatus $status,
@@ -19,6 +20,7 @@ class TaskResponse {
 
     public function toArray(): array {
         return [
+            "id" => $this->id,
             'title' => $this->title,
             'description' => $this->description,
             'status' => $this->status->value,

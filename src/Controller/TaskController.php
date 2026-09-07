@@ -21,6 +21,20 @@ class TaskController {
         private TaskValidation $taskValidation
     ){}
 
+    public function getTasks(): JsonResponse {
+        $responses = [];
+        $tasks = $this->taskService->getTasks();
+        
+
+        foreach($tasks as $task) {
+            $responses[] = $this->mapToResponse($task);
+            //var_dump($responses);
+        }
+
+        // var_dump(new JsonResponse($responses, 201));
+        return new JsonResponse($responses, 201);
+    }
+
     public function addTask(): JsonResponse {
         $data = $this->getJsonBody();
         $this->taskValidation->validate($data);
@@ -69,6 +83,7 @@ class TaskController {
 
     private function mapToResponse(Task $task): TaskResponse {
         return new TaskResponse(
+            $task->getId(),
             $task->getTitle(),
             $task->getDescription(),
             $task->getStatus(),

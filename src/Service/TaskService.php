@@ -21,6 +21,11 @@ class TaskService {
         private AssignmentRepository $assignmentRepository
     ){}
 
+    public function getTasks(): array {
+        return $this->taskRepository->getTasks();
+        
+    }
+
     public function addTask(CreateTaskRequest $request): Task {
         $task = new Task();
 

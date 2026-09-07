@@ -21,6 +21,7 @@ return function (
     $router->post('/tasks/{id}/subtasks', [$taskController, 'addSubtask']);
     $router->put('/tasks/{id}', [$taskController, 'updateTask']);
     $router->delete('/tasks/{id}/delete', [$taskController, 'deleteTask']);
+    $router->get('/tasks', [$taskController, 'getTasks']);
 
     // assignment
     $router->post('/tasks/{userId}/assign/{taskId}', [$assignmentController, 'assignTask']);

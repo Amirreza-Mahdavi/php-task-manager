@@ -13,6 +13,19 @@ class TaskRepository {
         private PDO $pdo
     ){}
 
+    public function getTasks(): array {
+        $tasks = [];
+        $sql = "SELECT * FROM tasks";
+        $statement = $this->pdo->prepare($sql);
+        $statement->execute();
+        $rows = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        foreach ($rows as $row) {
+            $tasks[] = $this->mapToTask($row);
+        }
+        return $tasks;
+    }
+
     public function findById(int $id): ?Task {
         $sql = "SELECT id, user_id, parent_task_id, title, description, status, priority, due_date, created_at, updated_at
         FROM tasks
